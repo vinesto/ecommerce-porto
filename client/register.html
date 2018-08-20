@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="css/helpers.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script> -->
+    <title>Register</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <nav class="navbar is-mobile is-danger is-transparent-top is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <!-- navbar items, navbar burger... -->
+                <a class="navbar-item" href="http://localhost:8080/index.html">
+                    <i class="fas fa-book" style="font-size:37px; margin-right:10px; color:#363636"></i>
+                    <h1 class="title">FOX STORE</h1>
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+        </nav>
+        <div class="container" style="width:50%;">
+            <div class="field" style="padding-top: 80px;">
+            <h2 class="title">Register Form</h2>
+                <label class="label">Name</label>
+                <div class="control">
+                    <input class="input" type="text" v-model="User.name" placeholder="Text input">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="email" v-model="User.email" placeholder="Email input">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="password" v-model="User.password" placeholder="Password">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-link" @click="registerUser">Submit</button>
+                </div>
+                <div class="control">
+                    <a class="button" href="http://localhost:8080/index.html">Cancel</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <footer-a style="position:relative; margin-top: 14px"></footer-a>
+    </div>
+
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="index.js"></script>
+
+
+</body>
+
+</html>

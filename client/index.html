@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" href="css/debug.css"> -->
+    <link rel="stylesheet" href="css/helpers.css">
+    <link rel="stylesheet" href="css/footerGrid.css">
+    <!-- <link rel="stylesheet" href="css/main.css"> -->
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: [xl-start] 1fr 1.5rem [md-start] minmax(0, 624px) [md-end] 1.5rem 1fr [xl-end];
+        }
+
+        .grid-xl {
+            grid-column: xl;
+        }
+    </style>
+    <title>Ecommerce</title>
+</head>
+
+
+<body class="has-navbar-fixed-top">
+
+    <div class= "container" id="app">
+        <nav class="navbar is-mobile is-danger is-transparent-top is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <!-- navbar items, navbar burger... -->
+                <a class="navbar-item">
+                    <i class="fas fa-futbol" style="font-size:37px; margin-right:10px; color:#363636"></i>
+                    <h1 class="title">FOX STORE</h1>
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <!-- navbar items, navbar burger... -->
+            <div class="navbar-menu">
+
+                <!-- navbar start, navbar end -->
+                <div class="navbar-start">
+                    <a class="navbar-item">
+                        Home
+                    </a>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            About
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item">
+                                Offline Store
+                            </a>
+                            <a class="navbar-item">
+                                Contact Us
+                            </a>
+                            <hr class="navbar-divider">
+                            <!-- <div class="navbar-item">
+                                Version 0.7.1
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- navbar items -->
+                </div>
+
+                <div class="navbar-end is-mobile">
+                    <!-- navbar items -->
+                    <div class="navbar-item is-mobile">
+                        <p class="control has-icons-left">
+                            <input class="input is-small" type="text" placeholder="search item">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                            </span>
+                        </p>
+
+                    </div>
+                    <figure class="navbar-item  image has-text-black center">
+                        <div class="dropdown is-hoverable is-right">
+                            <div class="dropdown-trigger">
+                                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                    <p>{{countItems()}}</p>
+                                    <i class="fas fa-shopping-cart" style="width: 1rem; height: 1rem;"></i>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                                <div class="dropdown-content">
+                                    <div class="dropdown-item">
+                                        <a href="#" class="dropdown-item">
+                                            <p class="title">Items in Cart</p class="title">
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <ol class="dropdown-item">
+                                            <li v-for="item in carts" :key="item.id">
+                                                {{item.text}} = {{item.priceTag}}
+                                                <p class="delete" @click="clearItem(item.id)"></p>
+                                            </li>
+                                        </ol>
+                                        <hr class="dropdown-divider">
+                                        <div class="columns">
+                                            <div class="column">
+                                                    <modal v-show="showModal" @close="showModal = false" @pay-item="payItem"></modal>
+                                                    <!-- <button type="button" class="btn btn-info" @click="showModal = true">Show modal</button> -->
+                                                <!-- <a href="#" class="button" v-on:click="payItem">
+                                                    Checkout
+                                                </a> -->
+                                                <a class="button" @click="showModal = true">
+                                                        Checkout
+                                                    </a>
+                                            </div>
+                                            <div class="column">
+                                                <p class="subtitle">Total price: {{priceTag(totalPrice)}}</p>
+                                            </div>
+                                        </div>
+                                        <!-- <p v-for="item in carts" :key="item.id">
+                                            {{item.price}}
+                                        </p> -->
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </figure>
+                    <figure class="navbar-item image has-text-black center">
+                        <div class="dropdown is-hoverable is-right">
+                            <div class="dropdown-trigger">
+                                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                    <i class="fas fa-bars" style="width: 1rem; height: 1rem;"></i>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                                <div class="dropdown-content">
+                                    <div class="dropdown-item">
+                                        <a href="#" class="dropdown-item">
+                                            Login
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            Logout
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            Settings
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a href="#" class="dropdown-item">
+                                            More
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </figure>
+                    <!-- navbar items -->
+                </div>
+                <!-- navbar start, navbar end -->
+            </div>
+        </nav>
+
+
+
+        <div class="container">
+            <div class="level notification is-dark">
+                <div class="column center has-text-white">Top Seller</div>
+                <div class="column center has-text-white">New Item</div>
+                <div class="column center has-text-white">Best Price</div>
+            </div>
+            <div class="tile is-ancestor" style="width: auto">
+                <div class="tile is-parent" style="width: auto">
+                    <article class="tile is-child">
+                        <div class="content">
+                            <nav class="panel">
+                                <p class="panel-heading">
+                                    Categories
+                                </p>
+                                <p class="panel-tabs">
+                                    <a class="is-active">all</a>
+                                    <a>men</a>
+                                    <a>women</a>
+                                    <a>kid</a>
+                                </p>
+                                <a class="panel-block is-active">
+                                    <span class="panel-icon">
+                                        <i class="fas fa-tshirt" aria-hidden="true"></i>
+                                    </span>
+                                    Clothes & Pants
+                                </a>
+                                <a class="panel-block">
+                                    <span class="panel-icon">
+                                        <i class="fas fa-shoe-prints" aria-hidden="true"></i>
+                                    </span>
+                                    Shoes
+                                </a>
+                                <a class="panel-block">
+                                    <span class="panel-icon">
+                                        <i class="fas fa-glasses" aria-hidden="true"></i>
+                                    </span>
+                                    Accessories
+                                </a>
+                                <div class="panel-block">
+                                    <button class="button is-link is-outlined is-fullwidth">
+                                        reset all filters
+                                    </button>
+                                </div>
+                            </nav>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="tile is-vertical is-8">
+                    <div class="tile">
+                        <div class="tile is-parent">
+                            <article class="tile is-child notification">
+                                <p class="title">List of item</p>
+                                <p class="subtitle">Clothes & Pants</p>
+                                <div class="columns is-multiline">
+                                    <div class="column is-one-third" v-for="(item, index) in Jersey">
+                                        <div class="card">
+                                            <div class="card-content">
+                                                <figure class="image">
+                                                    <img v-bind:src="item.img" alt="Placeholder image">
+                                                </figure>
+                                                <p class="title center">{{item.text}}</p>
+                                                <p class="subtitle is-6">{{item.description}}</p>
+                                                <h2 class="title is-4">{{item.priceTag}}</h2>
+                                                <h2 class="title is-4"> Stock:{{item.quantity}}</h2>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="card-footer-item">
+                                                    <button class="button is-active" v-on:click="addItem(item.id)">Add To Cart</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal" v-bind:class="{is-active:isActive}">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Modal title</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success">Save changes</button>
+                <button class="button">Cancel</button>
+            </footer>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
